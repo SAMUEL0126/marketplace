@@ -1,0 +1,5 @@
+django == 3.1.2
+pillow
+django-admin-interface
+django-crispy-forms
+django-rest-framework

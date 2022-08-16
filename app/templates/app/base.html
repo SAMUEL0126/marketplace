@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tecnomarket</title>
+    <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,700;1,400;1,700&family=Open+Sans:ital,wght@0,400;0,700;1,600&display=swap" rel="stylesheet">
+   
+    {% load static %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    {% block css %}
+    {% endblock  %}
+    <link rel="stylesheet" href=" {% static 'app/css/estilos.css' %}">
+    
+</head>
+<body>
+
+    
+    <header id="header">
+        <img class="menu" src=" {% static  'app/img/menuiconwhite.png' %}"alt="menu" id="menu">
+        <div class="contenedor_logo">
+            <img  class="logo"  src=" {% static  'app/img/tecnomarketpngicono.png' %}" alt="logo">
+        </div>
+
+        <div>
+            
+      '      <nav id="nav">
+                <ul>
+                    <li>
+                        <a href="{% url 'home' %}"> Inicio </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'contacto' %}"> Contacto</a>
+                    </li>
+                    <li><a href="{% url 'galeria' %}"> Galería</a>
+                    </li>
+                    {% if perms.app.add_producto %}
+                    <li>
+                        <a href="{% url 'agregar_producto' %}"> Agregar Produto</a>
+                    </li>
+                    {% endif %}
+                    {% if perms.app.view_producto %}
+                    <li>
+                        <a href="{% url 'listar_producto' %}"> Listado Produto</a>
+                    </li>
+                    {% endif %}
+                    {% if user.is_authenticated %}
+                    <li>
+                    <a href=" {% url 'logout' %} ">Cerrar sesion</a>
+                    </li>
+                    <li>
+                        <a href="#"> @{{user.username}} </a>
+                    </li>
+                    {% else %}
+                    <li>
+                        <a href=" {% url 'login' %} ">Iniciar sesion</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'registro' %}">Registrarse</a>
+                    </li>
+                    {% endif %}
+                    
+                </ul>
+            </nav>
+
+        </div>
+
+    </header>
+
+    <div id="contenido">
+
+
+       
+        {% block contenido %}
+        {% endblock  %}
+
+
+    </div>
+
+
+    <footer>
+        <div class="marcas">
+            <img src="{%static  'app/img/footer/apple.png'%}" alt="apple">
+            <img src="{%static 'app/img/footer/lenovo.png'%}" alt="lenovo">
+            <img src="{%static  'app/img/footer/microsoft.png'%}" alt="microsoft">
+            <img src="{%static  'app/img/footer/samsung.png'%}" alt="samsung">
+            <img src="{%static  'app/img/footer/xiaomi.png'%}" alt="xiaomi">
+        </div>
+        <div class="logo_footer">
+            <img src="{%static 'app/img/tecnomarketpngicono.png'%}" alt="logo">
+        </div>
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <script src="{% static 'app/js/menu.js'%}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    {% if messages %}
+        {% for m in messages %}
+            <script>
+                Swal.fire({
+                    "title": "Felicitaciones",
+                    "text":  "{{m}}",
+                    "icon": "success"
+                })
+            </script>
+        {% endfor  %}
+    {% endif %}
+    {% block js %}
+    {% endblock  %}
+</body>
+</html>
